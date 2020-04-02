@@ -17,6 +17,14 @@ return [
         ],
     ],
     'components' => [
+        'view' => [
+            'class' => 'yii\web\View',
+            'theme' => [
+                'class' => 'yii\base\Theme',
+                'pathMap' => ['@app/views' => 'themes/material-default'],
+                'baseUrl'   => 'themes/material-default'
+            ]
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'parsers' => [
