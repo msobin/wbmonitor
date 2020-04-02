@@ -21,18 +21,9 @@ class ProductService extends Component
     {
         $result = $this->parseProductUrl($url);
 
-        $domain = $result['domain'];
-        $code = $result['code'];
-
-        $product = $this->getProduct($domain, $code);
-
-        if ($product) {
-            throw new PSException('Product already exists');
-        }
-
         $product = new Product([
-            'domain' => $domain,
-            'code' => $code,
+            'domain' => $result['domain'],
+            'code' => $result['code'],
         ]);
 
         if (!$product->save()) {
@@ -47,9 +38,21 @@ class ProductService extends Component
      * @param int $code
      * @return Product|null
      */
-    public function getProduct(string $domain, int $code)
+    public function getProductByCode(string $domain, int $code)
     {
         return Product::findOne(['domain' => $domain, 'code' => $code]);
+    }
+
+    /**
+     * @param string $url
+     * @return Product|null
+     * @throws PSException
+     */
+    public function getProductByUrl(string $url)
+    {
+        $result = $this->parseProductUrl($url);
+
+        return $this->getProductByCode($result['domain'], $result['code']);
     }
 
     /**

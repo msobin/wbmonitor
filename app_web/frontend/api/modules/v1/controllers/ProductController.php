@@ -1,14 +1,13 @@
 <?php
 
-namespace frontend\api\v1\controllers;
+namespace frontend\api\modules\v1\controllers;
 
 use common\models\Product;
-use frontend\api\v1\actions\CreateProductAction;
+use frontend\api\modules\v1\actions\CreateProductAction;
 use yii\rest\ActiveController;
 
 /**
  * Class ProductController
- * @package frontend\api\v1\controllers
  */
 class ProductController extends ActiveController
 {
