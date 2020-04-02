@@ -1,17 +1,16 @@
 <?php
 
-
-namespace frontend\models;
+namespace frontend\models\forms;
 
 use Yii;
-use common\models\User;
 use yii\base\Model;
+use common\models\User;
 
-class ResendVerificationEmailForm extends Model
+/**
+ * Password reset request form
+ */
+class PasswordResetRequestForm extends Model
 {
-    /**
-     * @var string
-     */
     public $email;
 
 
@@ -26,37 +25,45 @@ class ResendVerificationEmailForm extends Model
             ['email', 'email'],
             ['email', 'exist',
                 'targetClass' => '\common\models\User',
-                'filter' => ['status' => User::STATUS_INACTIVE],
+                'filter' => ['status' => User::STATUS_ACTIVE],
                 'message' => 'There is no user with this email address.'
             ],
         ];
     }
 
     /**
-     * Sends confirmation email to user
+     * Sends an email with a link, for resetting the password.
      *
-     * @return bool whether the email was sent
+     * @return bool whether the email was send
      */
     public function sendEmail()
     {
+        /* @var $user User */
         $user = User::findOne([
+            'status' => User::STATUS_ACTIVE,
             'email' => $this->email,
-            'status' => User::STATUS_INACTIVE
         ]);
 
-        if ($user === null) {
+        if (!$user) {
             return false;
+        }
+        
+        if (!User::isPasswordResetTokenValid($user->password_reset_token)) {
+            $user->generatePasswordResetToken();
+            if (!$user->save()) {
+                return false;
+            }
         }
 
         return Yii::$app
             ->mailer
             ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
+                ['html' => 'passwordResetToken-html', 'text' => 'passwordResetToken-text'],
                 ['user' => $user]
             )
             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
             ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
+            ->setSubject('Password reset for ' . Yii::$app->name)
             ->send();
     }
 }

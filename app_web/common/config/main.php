@@ -1,8 +1,9 @@
 <?php
+
 return [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
@@ -19,6 +20,15 @@ return [
             'class' => \yii\redis\Connection::class,
             'hostname' => 'redis',
         ],
+        'urlManager' => [
+            'class' => \yii\web\UrlManager::class,
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => [
+                '<alias:\w+>' => 'site/<alias>',
+            ],
+        ],
         'rabbitmq' => [
             'class' => \mikemadisonweb\rabbitmq\Configuration::class,
             'connections' => [
@@ -30,6 +40,10 @@ return [
                     'vhost' => '/',
                 ]
             ],
+        ],
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => require __DIR__ . '/oauth-clients.php',
         ],
     ],
 ];
