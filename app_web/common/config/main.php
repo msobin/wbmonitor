@@ -6,6 +6,12 @@ return [
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'db' => [
+            'class' => \yii\db\Connection::class,
+            'dsn' => 'pgsql:host=postgres;port=5432;dbname=' . getenv('POSTGRES_DB'),
+            'username' => getenv('POSTGRES_USER'),
+            'password' => getenv('POSTGRES_PASSWORD'),
+        ],
         'cache' => [
             'class' => \yii\redis\Cache::class,
         ],

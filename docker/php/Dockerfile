@@ -40,7 +40,7 @@ RUN apt-get purge -y g++ \
 RUN rm -rf /usr/local/etc/php-fpm.d
 COPY ./pools /usr/local/etc/php-fpm.d
 COPY ./php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY ./php.ini /usr/local/etc/php/php.ini
+#COPY ./php.ini /usr/local/etc/php/php.ini
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
