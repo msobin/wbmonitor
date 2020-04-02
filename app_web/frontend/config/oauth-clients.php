@@ -13,7 +13,6 @@ if ($googleClientID && $googleClientSecret) {
         'class' => \yii\authclient\clients\Google::class,
         'clientId' => $googleClientID,
         'clientSecret' => $googleClientSecret,
-        //'returnUrl' => 'http://dev.wbmonitor.com/auth'
     ];
 }
 
@@ -22,7 +21,6 @@ if ($facebookClientID && $facebookClientSecret) {
         'class' => \yii\authclient\clients\Facebook::class,
         'clientId' => $facebookClientID,
         'clientSecret' => $facebookClientSecret,
-        //'returnUrl' => 'http://dev.wbmonitor.com/auth'
     ];
 }
 

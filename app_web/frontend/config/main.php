@@ -11,9 +11,17 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'v1' => [
+            'class' => \frontend\api\v1\Module::class,
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -36,14 +44,25 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => \yii\rest\UrlRule::class,
+                    'controller' => ['v1/product'],
+                    'prefix' => 'api',
+                ],
+
+                '' => 'site/index',
+                '<alias:\w+>' => 'site/<alias>',
             ],
         ],
-        */
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => require __DIR__ . '/oauth-clients.php',
+        ],
     ],
     'params' => $params,
 ];

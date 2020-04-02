@@ -1,6 +1,8 @@
 .idea
 docker-compose.yml
 docker/log
+docker/postgres/data
+docker/rabbitmq/data
 .env
 
 !.gitignore
