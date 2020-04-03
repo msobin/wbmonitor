@@ -19,6 +19,7 @@ use yii\db\Expression;
  * @property array $images
  * @property array $picker
  * @property array $sizes
+ * @property array $categories_ids
  * @property integer $ref_count
  * @property DateTime $created_at
  * @property DateTime $updated_at
@@ -59,7 +60,8 @@ class Product extends ActiveRecord
             ['status', 'default', 'value' => self::STATUS_NEW],
             ['ref_count', 'default', 'value' => 0],
             [['domain', 'name'], 'string', 'max' => 255],
-            [['code', 'status', 'ref_count'], 'integer']
+            [['code', 'status', 'ref_count'], 'integer'],
+            ['categories_ids', 'each', 'rule' => 'integer'],
         ];
     }
 

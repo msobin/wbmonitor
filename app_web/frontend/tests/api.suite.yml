@@ -1,0 +1,15 @@
+actor: ApiTester
+modules:
+  enabled:
+    - \frontend\tests\Helper\Api
+    - REST:
+        depends: PhpBrowser
+        url: http://nginx/api/v1/
+        part: Json
+    - Yii2:
+        part: fixtures
+    - Db:
+        dsn: 'pgsql:host=postgres;dbname=wbmonitor_test'
+        user: 'wbmonitor'
+        password: 'wbmonitor'
+        dump: 'tests/_data/dump.sql'

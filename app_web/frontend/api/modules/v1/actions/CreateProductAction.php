@@ -2,9 +2,11 @@
 
 namespace frontend\api\modules\v1\actions;
 
+use common\services\exceptions\PSException;
 use Yii;
 use yii\helpers\Url;
 use yii\rest\CreateAction;
+use yii\web\BadRequestHttpException;
 use yii\web\ConflictHttpException;
 use yii\web\ServerErrorHttpException;
 
@@ -15,6 +17,7 @@ class CreateProductAction extends CreateAction
 {
     /**
      * {@inheritdoc}
+     * @throws BadRequestHttpException
      */
     public function run()
     {
@@ -33,8 +36,14 @@ class CreateProductAction extends CreateAction
 
             $model = Yii::$app->productService->addProduct($url);
             $model->refresh();
+        } catch (PSException $e) {
+            if ($e->getCode() == PSException::CODE_INTERNAL_ERROR) {
+                throw new ServerErrorHttpException();
+            } else {
+                throw new BadRequestHttpException($e->getMessage());
+            }
         } catch (\Exception $e) {
-            throw new ServerErrorHttpException('Error occured');
+            throw new ServerErrorHttpException($e->getMessage());
         }
 
         $response = Yii::$app->getResponse();

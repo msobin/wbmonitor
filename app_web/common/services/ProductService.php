@@ -27,7 +27,7 @@ class ProductService extends Component
         ]);
 
         if (!$product->save()) {
-            throw new PSException('Error while saving product');
+            throw new PSException('Error while saving product', PSException::CODE_INTERNAL_ERROR);
         }
 
         return $product;
@@ -69,7 +69,7 @@ class ProductService extends Component
         );
 
         if (!isset($matches['domain']) || !isset($matches['code'])) {
-            throw new PSException('Invalid url');
+            throw new PSException('Invalid url', PSException::CODE_BAD_REQUEST);
         }
 
         return [

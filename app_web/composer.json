@@ -35,7 +35,8 @@
         "codeception/verify": "~0.5.0 || ~1.1.0",
         "symfony/browser-kit": ">=2.7 <=4.2.4",
         "codeception/module-phpbrowser": "^1.0.0",
-        "codeception/module-db": "^1.0"
+        "codeception/module-db": "^1.0",
+        "codeception/module-rest": "^1.2"
     },
     "config": {
         "process-timeout": 1800,
