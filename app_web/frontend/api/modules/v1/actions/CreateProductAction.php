@@ -17,6 +17,7 @@ class CreateProductAction extends CreateAction
 {
     /**
      * {@inheritdoc}
+     * @throws ConflictHttpException
      * @throws BadRequestHttpException
      */
     public function run()
@@ -36,6 +37,8 @@ class CreateProductAction extends CreateAction
 
             $model = Yii::$app->productService->addProduct($url);
             $model->refresh();
+        } catch (ConflictHttpException $e) {
+            throw $e;
         } catch (PSException $e) {
             if ($e->getCode() == PSException::CODE_INTERNAL_ERROR) {
                 throw new ServerErrorHttpException();
@@ -48,9 +51,7 @@ class CreateProductAction extends CreateAction
 
         $response = Yii::$app->getResponse();
         $response->setStatusCode(201);
-        $id = implode(',', array_values($model->getPrimaryKey(true)));
-
-        $response->getHeaders()->set('Location', Url::toRoute([$this->viewAction, 'id' => $id], true));
+        $response->getHeaders()->set('Location', Url::toRoute([$this->viewAction, 'id' => $model->id], true));
 
         return $model;
     }

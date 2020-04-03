@@ -49,6 +49,6 @@ class ProductCest
     public function testAddProductAlreadyExists(ApiTester $I)
     {
         $I->sendPOST('/products', ['url' => 'https://www.wildberries.ru/catalog/123/detail.aspx?']);
-        $I->seeResponseCodeIs(HttpCode::CREATED);
+        $I->seeResponseCodeIs(HttpCode::CONFLICT);
     }
 }

@@ -3,8 +3,8 @@ modules:
   enabled:
     - \frontend\tests\Helper\Api
     - REST:
-        depends: PhpBrowser
-        url: http://nginx/api/v1/
+        depends: Yii2
+        url: /api/v1/
         part: Json
     - Yii2:
         part: fixtures
