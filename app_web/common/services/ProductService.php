@@ -36,11 +36,11 @@ class ProductService extends Component
     /**
      * @param string $domain
      * @param int $code
-     * @return Product|null
+     * @return array|null|\yii\db\ActiveRecord|Product
      */
     public function getProductByCode(string $domain, int $code)
     {
-        return Product::findOne(['domain' => $domain, 'code' => $code]);
+        return Product::find()->where(['domain' => $domain, 'code' => $code])->limit(1)->one();
     }
 
     /**

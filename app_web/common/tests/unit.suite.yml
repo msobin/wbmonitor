@@ -1,7 +1,15 @@
 suite_namespace: common\tests\unit
+
 actor: UnitTester
+
 bootstrap: false
+
 modules:
-    enabled:
-        - Yii2:
-            part: fixtures
+  enabled:
+    - Yii2:
+        part: fixtures
+    - Db:
+        dsn: 'pgsql:host=postgres;dbname=wbmonitor_test'
+        user: 'wbmonitor'
+        password: 'wbmonitor'
+        dump: 'tests/_data/dump.sql'

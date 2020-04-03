@@ -2,6 +2,8 @@
 
 namespace common\tests;
 
+use common\fixtures\ProductFixture;
+use common\models\Product;
 use common\services\ProductService;
 
 /**
@@ -14,6 +16,7 @@ class ProductServiceTest extends \Codeception\Test\Unit
      * @var \common\tests\UnitTester
      */
     protected $tester;
+
     /**
      * @var ProductService
      */
@@ -28,10 +31,16 @@ class ProductServiceTest extends \Codeception\Test\Unit
     }
 
     /**
-     * @return void
+     * @return array
      */
-    protected function _after()
+    public function _fixtures()
     {
+        return [
+            'product' => [
+                'class' => ProductFixture::class,
+                'dataFile' => codecept_data_dir() . 'product.php'
+            ]
+        ];
     }
 
     /**
@@ -54,8 +63,44 @@ class ProductServiceTest extends \Codeception\Test\Unit
      */
     public function testParseUrlException()
     {
-        $this->productService->parseProductUrl(
-            'http://www.wildberries.tk/catalog/123/detail.aspx?'
-        );
+        $this->productService->parseProductUrl('xxx://www.wildberries.tk/catalog/123/detail.aspx?');
+    }
+
+    /**
+     * @return void
+     * @throws \common\services\exceptions\PSException
+     */
+    public function testGetProductByUrl()
+    {
+        $product = $this->productService->getProductByUrl('https://www.wildberries.kz/catalog/123/detail.aspx?');
+
+        $this->assertInstanceOf(Product::class, $product);
+        $this->assertEquals(123, $product->code);
+        $this->assertEquals('kz', $product->domain);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductByCode()
+    {
+        $product = $this->productService->getProductByCode('ru', 123);
+
+        $this->assertInstanceOf(Product::class, $product);
+        $this->assertEquals(123, $product->code);
+        $this->assertEquals('ru', $product->domain);
+    }
+
+    /**
+     * @return void
+     * @throws \common\services\exceptions\PSException
+     */
+    public function testAddProduct()
+    {
+        $product = $this->productService->addProduct('https://www.wildberries.tk/catalog/123/detail.aspx?');
+
+        $this->assertInstanceOf(Product::class, $product);
+        $this->assertEquals(123, $product->code);
+        $this->assertEquals('tk', $product->domain);
     }
 }
