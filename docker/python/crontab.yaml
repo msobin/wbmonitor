@@ -1,0 +1,12 @@
+jobs:
+  - name: new_crapping
+    command: cd /app/wbscrapy && python rmq_scrapping.py
+    schedule: "*/30 * * * *"
+
+  - name: regular_scrapping
+    command: cd /app/wbscrapy && python regular_scrapping.py
+    schedule: "0 */2 * * *"
+
+  - name: update_proxies
+    command: cd /app/wbscrapy && python check_proxies.py
+    schedule: "0 */12 * * *"

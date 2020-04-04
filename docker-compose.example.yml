@@ -7,9 +7,21 @@ services:
       - .env
     volumes:
       - ./docker/log:/var/log/container
-      - ./app_web:/app
+      - ./app_php:/app
     expose:
       - 9005
+    depends_on:
+      - postgres
+      - redis
+    restart: on-failure
+
+  python:
+    env_file:
+      - .env
+    build: ./docker/python
+    volumes:
+      - ./docker/log:/var/log/container
+      - ./app_python:/app
     depends_on:
       - postgres
       - redis
@@ -36,7 +48,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./app_web:/app
+      - ./app_php:/app
       - ./docker/log:/var/log/container
       - ./docker/nginx:/etc/nginx/conf.d
     depends_on:
