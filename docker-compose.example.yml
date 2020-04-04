@@ -21,6 +21,7 @@ services:
     build: ./docker/python
     volumes:
       - ./docker/log:/var/log/container
+      - ./docker/data:/data
       - ./app_python:/app
     depends_on:
       - postgres
