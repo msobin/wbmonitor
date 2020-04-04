@@ -79,4 +79,13 @@ class ProductService extends Component
             'code' => $matches['code'],
         ];
     }
+
+    /**
+     * @param Product $product
+     * @return string
+     */
+    public function buildUrl(Product $product)
+    {
+        return  "https://www.wildberries.{$product->domain}/catalog/{$product->code}/detail.aspx";
+    }
 }

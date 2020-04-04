@@ -23,6 +23,11 @@ use yii\db\Expression;
  * @property integer $ref_count
  * @property DateTime $created_at
  * @property DateTime $updated_at
+ *
+ * @property ProductPrice[] $prices
+ * @property Brand $brand
+ * @property Category $category
+ * @property ProductPrice $currentPrice
  */
 class Product extends ActiveRecord
 {
@@ -71,5 +76,37 @@ class Product extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPrices()
+    {
+        return $this->hasMany(ProductPrice::class, ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCurrentPrice()
+    {
+        return $this->hasOne(ProductPrice::class, ['product_id' => 'id'])->orderBy(['id' => SORT_DESC]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBrand()
+    {
+        return $this->hasOne(Brand::class, ['id' => 'brand_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory()
+    {
+        return $this->hasOne(Category::class, ['id' => 'category_ids']);
     }
 }
