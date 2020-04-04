@@ -52,10 +52,10 @@ class ProductServiceTest extends \Codeception\Test\Unit
             'https://www.wildberries.tk/catalog/123/detail.aspx?'
         );
 
-        $this->assertArrayHasKey('domain', $result);
-        $this->assertArrayHasKey('code', $result);
-        $this->assertEquals('tk', $result['domain']);
-        $this->assertEquals(123, $result['code']);
+        expect($result)->hasKey('domain');
+        expect($result)->hasKey('code');
+        expect($result['domain'])->equals('tk');
+        expect($result['code'])->equals('123');
     }
 
     /**
@@ -74,9 +74,9 @@ class ProductServiceTest extends \Codeception\Test\Unit
     {
         $product = $this->productService->getProductByUrl('https://www.wildberries.kz/catalog/123/detail.aspx?');
 
-        $this->assertInstanceOf(Product::class, $product);
-        $this->assertEquals(123, $product->code);
-        $this->assertEquals('kz', $product->domain);
+        expect($product)->isInstanceOf(Product::class);
+        expect($product->domain)->equals('tk');
+        expect($product->code)->equals('123');
     }
 
     /**
@@ -86,9 +86,9 @@ class ProductServiceTest extends \Codeception\Test\Unit
     {
         $product = $this->productService->getProductByCode('ru', 123);
 
-        $this->assertInstanceOf(Product::class, $product);
-        $this->assertEquals(123, $product->code);
-        $this->assertEquals('ru', $product->domain);
+        expect($product)->isInstanceOf(Product::class);
+        expect($product->domain)->equals('ru');
+        expect($product->code)->equals('123');
     }
 
     /**
@@ -99,8 +99,8 @@ class ProductServiceTest extends \Codeception\Test\Unit
     {
         $product = $this->productService->addProduct('https://www.wildberries.tk/catalog/123/detail.aspx?');
 
-        $this->assertInstanceOf(Product::class, $product);
-        $this->assertEquals(123, $product->code);
-        $this->assertEquals('tk', $product->domain);
+        expect($product)->isInstanceOf(Product::class);
+        expect($product->domain)->equals('tk');
+        expect($product->code)->equals('123');
     }
 }
