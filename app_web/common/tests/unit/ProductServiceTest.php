@@ -59,7 +59,7 @@ class ProductServiceTest extends \Codeception\Test\Unit
     }
 
     /**
-     * @expectedException \common\services\exceptions\PSException
+     * @expectedException \common\services\exceptions\PSInvalidUrlException
      */
     public function testParseUrlException()
     {

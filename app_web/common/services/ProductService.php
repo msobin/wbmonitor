@@ -4,6 +4,8 @@ namespace common\services;
 
 use common\models\Product;
 use common\services\exceptions\PSException;
+use common\services\exceptions\PSInvalidUrlException;
+use common\services\exceptions\PSProductSaveException;
 use yii\base\Component;
 
 /**
@@ -27,7 +29,7 @@ class ProductService extends Component
         ]);
 
         if (!$product->save()) {
-            throw new PSException('Error while saving product', PSException::CODE_INTERNAL_ERROR);
+            throw new PSProductSaveException('Error while saving product');
         }
 
         return $product;
@@ -46,7 +48,7 @@ class ProductService extends Component
     /**
      * @param string $url
      * @return Product|null
-     * @throws PSException
+     * @throws PSInvalidUrlException
      */
     public function getProductByUrl(string $url)
     {
@@ -58,7 +60,7 @@ class ProductService extends Component
     /**
      * @param string $url
      * @return array
-     * @throws PSException
+     * @throws PSInvalidUrlException
      */
     public function parseProductUrl(string $url)
     {
@@ -69,7 +71,7 @@ class ProductService extends Component
         );
 
         if (!isset($matches['domain']) || !isset($matches['code'])) {
-            throw new PSException('Invalid url', PSException::CODE_BAD_REQUEST);
+            throw new PSInvalidUrlException('Can\'t parse url ' . $url);
         }
 
         return [

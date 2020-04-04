@@ -24,14 +24,14 @@ class LoginFormTest extends \Codeception\Test\Unit
     {
         return [
             'user' => [
-                'class' => UserFixture::className(),
+                'class' => UserFixture::class,
                 'dataFile' => codecept_data_dir() . 'user.php'
             ]
         ];
     }
 
     /**
-     * @skip
+     * @return void
      */
     public function testLoginNoUser()
     {
@@ -45,7 +45,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     }
 
     /**
-     * @skip
+     * @return void
      */
     public function testLoginWrongPassword()
     {
@@ -60,7 +60,7 @@ class LoginFormTest extends \Codeception\Test\Unit
     }
 
     /**
-     * @skip
+     * @return void
      */
     public function testLoginCorrect()
     {
