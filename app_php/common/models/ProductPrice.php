@@ -11,16 +11,11 @@ use DateTime;
  * Class ProductPrice
  * @package common\models
  *
- * @property integer $id
- * @property string $domain
- * @property string $code
- * @property string $name
- * @property integer $status
- * @property array $images
- * @property array $picker
- * @property array $sizes
- * @property array $categories_ids
- * @property integer $ref_count
+ * @property int $id
+ * @property int $product_id
+ * @property int $value
+ * @property int $prev_value
+ * @property int $status
  * @property DateTime $created_at
  * @property DateTime $updated_at
  *
@@ -60,6 +55,7 @@ class ProductPrice extends ActiveRecord
         return [
             [['product_id', 'value', 'status'], 'required'],
             ['status', 'default', 'value' => self::STATUS_NEW],
+            [['product_id', 'value', 'prev_value', 'status'], 'integer'],
         ];
     }
 

@@ -3,9 +3,8 @@
 namespace common\services;
 
 use common\models\Product;
-use common\services\exceptions\PSException;
-use common\services\exceptions\PSInvalidUrlException;
-use common\services\exceptions\PSProductSaveException;
+use common\services\exceptions\ProductServiceException;
+use Yii;
 use yii\base\Component;
 
 /**
@@ -17,7 +16,7 @@ class ProductService extends Component
     /**
      * @param string $url
      * @return Product
-     * @throws PSException
+     * @throws ProductServiceException
      */
     public function addProduct(string $url)
     {
@@ -29,7 +28,7 @@ class ProductService extends Component
         ]);
 
         if (!$product->save()) {
-            throw new PSProductSaveException('Error while saving product');
+            throw new ProductServiceException(Yii::t('app', 'Ошибка при сохранении товара'));
         }
 
         return $product;
@@ -48,7 +47,7 @@ class ProductService extends Component
     /**
      * @param string $url
      * @return Product|null
-     * @throws PSInvalidUrlException
+     * @throws ProductServiceException
      */
     public function getProductByUrl(string $url)
     {
@@ -60,7 +59,7 @@ class ProductService extends Component
     /**
      * @param string $url
      * @return array
-     * @throws PSInvalidUrlException
+     * @throws ProductServiceException
      */
     public function parseProductUrl(string $url)
     {
@@ -71,7 +70,7 @@ class ProductService extends Component
         );
 
         if (!isset($matches['domain']) || !isset($matches['code'])) {
-            throw new PSInvalidUrlException('Can\'t parse url ' . $url);
+            throw new ProductServiceException(Yii::t('app', 'Некорректный URL: {url} ', ['url' => $url]));
         }
 
         return [
@@ -86,6 +85,6 @@ class ProductService extends Component
      */
     public function buildUrl(Product $product)
     {
-        return  "https://www.wildberries.{$product->domain}/catalog/{$product->code}/detail.aspx";
+        return "https://www.wildberries.{$product->domain}/catalog/{$product->code}/detail.aspx";
     }
 }

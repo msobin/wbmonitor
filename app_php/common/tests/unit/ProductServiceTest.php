@@ -44,7 +44,7 @@ class ProductServiceTest extends \Codeception\Test\Unit
     }
 
     /**
-     * @throws \common\services\exceptions\PSException
+     * @throws \common\services\exceptions\ProductServiceException
      */
     public function testParseUrlSuccess()
     {
@@ -59,7 +59,7 @@ class ProductServiceTest extends \Codeception\Test\Unit
     }
 
     /**
-     * @expectedException \common\services\exceptions\PSInvalidUrlException
+     * @expectedException \common\services\exceptions\ProductServiceInvalidUrlException
      */
     public function testParseUrlException()
     {
@@ -68,7 +68,7 @@ class ProductServiceTest extends \Codeception\Test\Unit
 
     /**
      * @return void
-     * @throws \common\services\exceptions\PSException
+     * @throws \common\services\exceptions\ProductServiceException
      */
     public function testGetProductByUrl()
     {
@@ -93,7 +93,7 @@ class ProductServiceTest extends \Codeception\Test\Unit
 
     /**
      * @return void
-     * @throws \common\services\exceptions\PSException
+     * @throws \common\services\exceptions\ProductServiceException
      */
     public function testAddProduct()
     {

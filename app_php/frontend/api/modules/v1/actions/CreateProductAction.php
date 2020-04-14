@@ -2,7 +2,7 @@
 
 namespace frontend\api\modules\v1\actions;
 
-use common\services\exceptions\PSException;
+use common\services\exceptions\ProductServiceException;
 use Yii;
 use yii\helpers\Url;
 use yii\rest\CreateAction;
@@ -39,8 +39,8 @@ class CreateProductAction extends CreateAction
             $model->refresh();
         } catch (ConflictHttpException $e) {
             throw $e;
-        } catch (PSException $e) {
-            if ($e->getCode() == PSException::CODE_INTERNAL_ERROR) {
+        } catch (ProductServiceException $e) {
+            if ($e->getCode() == ProductServiceException::CODE_INTERNAL_ERROR) {
                 throw new ServerErrorHttpException();
             } else {
                 throw new BadRequestHttpException($e->getMessage());

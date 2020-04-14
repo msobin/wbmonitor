@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
+    'name' => 'WBMonitor',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
@@ -49,14 +50,13 @@ return [
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                '/' => 'site/index',
                 [
                     'class' => \yii\rest\UrlRule::class,
                     'controller' => ['v1/product'],
                     'prefix' => 'api',
                 ],
-
-                '' => 'site/index',
-                '<alias:\w+>' => 'site/<alias>',
+                'product/add' => 'product/add-product',
             ],
         ],
         'authClientCollection' => [

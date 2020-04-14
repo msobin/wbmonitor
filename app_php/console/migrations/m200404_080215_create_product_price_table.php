@@ -14,6 +14,7 @@ class m200404_080215_create_product_price_table extends \console\migrations\mode
             'id' => $this->primaryKey(),
             'product_id' => $this->integer()->notNull(),
             'value' => $this->integer()->notNull(),
+            'value_prev' => $this->integer(),
             'status' => $this->tinyInteger()->notNull()->defaultValue(1),
             'created_at' => $this->timestamp()->notNull()->defaultExpression('NOW()'),
             'updated_at' => $this->timestamp()->notNull()->defaultExpression('NOW()'),

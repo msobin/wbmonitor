@@ -66,7 +66,7 @@ class Product extends ActiveRecord
             ['ref_count', 'default', 'value' => 0],
             [['domain', 'name'], 'string', 'max' => 255],
             [['code', 'status', 'ref_count'], 'integer'],
-            ['categories_ids', 'each', 'rule' => 'integer'],
+            ['category_ids', 'each', 'rule' => 'integer'],
         ];
     }
 
