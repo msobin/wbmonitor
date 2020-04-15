@@ -21,7 +21,7 @@ use frontend\models\Product;
             <li class="list-group-item"><?= $model->cardSizes ?></li>
         <?php endif; ?>
         <?php if ($model->price) : ?>
-            <li class="list-group-item"><?= $model->cardPrice ?></li>
+            <li class="list-group-item"><?= implode(' -> ', [$model->cardPricePrev, $model->cardPrice]) ?></li>
         <?php endif; ?>
     </ul>
     <div class="card-body">

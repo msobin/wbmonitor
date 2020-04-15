@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use NumberFormatter;
 use Yii;
 use yii\helpers\Url;
 
@@ -14,6 +15,7 @@ use yii\helpers\Url;
  * @property string $imageUrl
  * @property string $cardSizes
  * @property string $cardPrice
+ * @property string $cardPricePrev
  */
 class Product extends \common\models\Product
 {
@@ -55,10 +57,30 @@ class Product extends \common\models\Product
      */
     public function getCardPrice()
     {
-        return $this->price
+        return $this->getCardPriceAttribute('value');
+    }
+
+    /**
+     * @return string
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getCardPricePrev()
+    {
+        return $this->getCardPriceAttribute('value_prev');
+    }
+
+    /**
+     * @param string $attribute
+     * @return string
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getCardPriceAttribute(string $attribute)
+    {
+        return $this->price && $this->price->{$attribute}
             ? Yii::$app->formatter->asCurrency(
-                $this->price->value,
-                Yii::$app->productService->getProductCurrencyCode($this)
+                $this->price->{$attribute},
+                Yii::$app->productService->getProductCurrencyCode($this),
+                [NumberFormatter::MAX_FRACTION_DIGITS => 0]
             )
             : '';
     }
