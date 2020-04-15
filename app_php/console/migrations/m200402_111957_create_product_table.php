@@ -16,6 +16,7 @@ class m200402_111957_create_product_table extends \console\migrations\models\Mig
             'domain' => $this->string(255)->notNull(),
             'code' => $this->integer()->notNull(),
             'name' => $this->string(255),
+            'description' => $this->text(),
             'status' => $this->tinyInteger()->notNull()->defaultValue(1),
             'ref_count' => $this->integer()->notNull()->defaultValue(0),
             'images' => $this->getDb()->getSchema()->createColumnSchemaBuilder('text[]')->defaultValue('{}'),

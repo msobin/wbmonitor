@@ -12,6 +12,15 @@ return [
             'dsn' => 'pgsql:host=postgres;port=5432;dbname=' . getenv('POSTGRES_DB'),
             'username' => getenv('POSTGRES_USER'),
             'password' => getenv('POSTGRES_PASSWORD'),
+            'schemaMap' => [
+                'pgsql' => [
+                    'class' => \yii\db\pgsql\Schema::class,
+                    'columnSchemaClass' => [
+                        'class' => \yii\db\pgsql\ColumnSchema::class,
+                        'deserializeArrayColumnToArrayExpression' => false,
+                    ],
+                ],
+            ],
         ],
         'cache' => [
             'class' => \yii\redis\Cache::class,

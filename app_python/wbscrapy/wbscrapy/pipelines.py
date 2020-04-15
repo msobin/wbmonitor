@@ -32,6 +32,7 @@ class PostgresPipeline(object):
 
         product.status = Product.STATUS_REGULAR
         product.name = item.get('name')
+        product.description = item.get('description')
         product.brand_id = self.get_brand_id(spider, item.get('brand'))
         product.images = item.get('images', [])
         product.picker = picker

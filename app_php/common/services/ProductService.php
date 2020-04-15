@@ -6,6 +6,7 @@ use common\models\Product;
 use common\services\exceptions\ProductServiceException;
 use Yii;
 use yii\base\Component;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class ProductService
@@ -86,5 +87,26 @@ class ProductService extends Component
     public function buildUrl(Product $product)
     {
         return "https://www.wildberries.{$product->domain}/catalog/{$product->code}/detail.aspx";
+    }
+
+    /**
+     * @param Product $product
+     * @return string
+     */
+    public function getProductCurrencyCode(Product $product)
+    {
+        return $this->getDomainCurrencyCode($product->domain);
+    }
+
+    /**
+     * @param string $domain
+     * @return string
+     */
+    public function getDomainCurrencyCode(string $domain)
+    {
+        return ArrayHelper::getValue([
+            'kz' => 'KZT',
+            'ru' => 'RUB',
+        ], $domain);
     }
 }

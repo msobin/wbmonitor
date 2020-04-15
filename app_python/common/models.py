@@ -18,6 +18,7 @@ class Product(Base):
     domain = Column(String)
     code = Column(Integer)
     name = Column(String)
+    description = Column(String)
     status = Column(Integer, default=STATUS_NEW)
     images = Column(ARRAY(String), default=[])
     picker = Column(ARRAY(Integer), default=[])

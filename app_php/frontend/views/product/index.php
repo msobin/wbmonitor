@@ -1,9 +1,7 @@
 <?php
 
 use yii\data\ActiveDataProvider;
-use yii\grid\GridView;
-use frontend\models\Product;
-use yii\helpers\Html;
+use yii\widgets\ListView;
 
 /**
  * @var ActiveDataProvider $dataProvider
@@ -12,17 +10,10 @@ use yii\helpers\Html;
 ?>
 
 <?php try {
-    echo GridView::widget([
+    echo ListView::widget([
         'dataProvider' => $dataProvider,
-        'columns' => [
-            [
-                'attribute' => 'id',
-                'content' => function (Product $product) {
-                    return Html::a('#' . $product->id, $product->getUri());
-                }
-            ],
-            'name'
-        ],
+        'itemView' => '_product',
     ]);
 } catch (Exception $e) {
+    throw $e;
 } ?>
