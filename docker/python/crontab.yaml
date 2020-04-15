@@ -2,3 +2,7 @@ jobs:
   - name: update_proxies
     command: cd /app && python check_proxies.py
     schedule: "0 */12 * * *"
+
+  - name: regular_scrapping
+    command: cd /app/wbscrapy && scrapy crawl products
+    schedule: "0 */4 * * *"

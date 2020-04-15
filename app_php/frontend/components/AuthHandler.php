@@ -28,27 +28,31 @@ class AuthHandler
     }
 
     /**
-     *
      * @throws \yii\base\Exception
+     *
+     * todo рефакторинг
      */
     public function handle()
     {
         $attributes = $this->client->getUserAttributes();
-        $email = ArrayHelper::getValue($attributes, 'email');
+
         $id = ArrayHelper::getValue($attributes, 'id');
         $name = ArrayHelper::getValue($attributes, 'name');
+        $email = ArrayHelper::getValue($attributes, 'email');
 
         /* @var Auth $auth */
-        $auth = Auth::find()->where([
-            'source' => $this->client->getId(),
-            'source_id' => $id,
-        ])->one();
+        $auth = Auth::find()
+            ->where([
+                'source' => $this->client->getId(),
+                'source_id' => $id,
+            ])
+            ->one();
 
         if (Yii::$app->user->isGuest) {
-            if ($auth) { // login
-                /* @var User $user */
+            if ($auth) {
                 $user = $auth->user;
                 $this->updateUserInfo($user);
+                Yii::$app->user->login($user);
             } else { // signup
                 if ($email !== null && User::find()->where(['email' => $email])->exists()) {
                     Yii::$app->getSession()->setFlash('error', Yii::t(
@@ -133,6 +137,8 @@ class AuthHandler
 
     /**
      * @param User $user
+     *
+     * todo рефакторинг
      */
     private function updateUserInfo(User $user)
     {
