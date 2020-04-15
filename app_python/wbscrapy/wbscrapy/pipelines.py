@@ -4,7 +4,6 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-from sqlalchemy import and_
 
 from common.models import *
 
@@ -25,10 +24,11 @@ class PostgresPipeline(object):
         picker = list(map(lambda code: int(code), item.get('picker', [])))
         picker = list(filter(lambda code: code != product.code, picker))
 
-        for code in picker:
-            if not spider.session.query(Product).filter_by(code=code).first():
-                spider.session.add(
-                    Product(code=code, domain=product.domain, status=Product.STATUS_NEW))
+        if product.status == Product.STATUS_NEW:
+            for code in picker:
+                if not spider.session.query(Product).filter_by(code=code).first():
+                    spider.session.add(
+                        Product(code=code, domain=product.domain, status=Product.STATUS_SATELLITE))
 
         product.status = Product.STATUS_REGULAR
         product.name = item.get('name')
@@ -39,27 +39,16 @@ class PostgresPipeline(object):
         product.updated_at = datetime.datetime.now()
         product.category_ids = self.get_category_ids(spider, item.get('categories'))
 
-        product_price = product.current_price.value if product.current_price else None
         item_price = item.get('price')
 
-        if product_price != item_price:
-            spider.session.add(
-                ProductPrice(product_id=product.id, value=item_price))
-
-        # if item_price:
-        #     user_product_ids = spider.session.query(UserProduct.id).filter_by(product_id=product.id).distinct()
-        #
-        #     spider.session.query(UserProductPrice).filter(and_(UserProductPrice.user_product_id.in_(user_product_ids),
-        #                                                        UserProductPrice.price_start == None,
-        #                                                        UserProductPrice.status == None)).update(
-        #         {'price_start': item_price, 'price_end': item_price, 'status': UserProductPrice.STATUS_APPEARED},
-        #         synchronize_session=False)
-        #
-        #     spider.session.query(UserProductPrice).filter(and_(UserProductPrice.user_product_id.in_(user_product_ids),
-        #                                                        UserProductPrice.price_start != None,
-        #                                                        UserProductPrice.price_end != item_price)).update(
-        #         {'price_end': item_price, 'status': UserProductPrice.STATUS_UPDATED},
-        #         synchronize_session=False)
+        if not product.price:
+            spider.session.add(ProductPrice(product_id=product.id, value=item_price))
+            spider.session.add(ProductPriceHistory(product_id=product.id, value=item_price))
+        else:
+            if product.price.value != item_price:
+                product.price.value_prev = product.price.value
+                product.price.value = item_price
+                spider.session.add(ProductPriceHistory(product_id=product.id, value=item_price))
 
         spider.session.commit()
 

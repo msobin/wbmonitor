@@ -90,5 +90,5 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-ROTATING_PROXY_LIST_PATH = '/data/proxies.lst'
-ROTATING_PROXY_CLOSE_SPIDER = True
+# ROTATING_PROXY_LIST_PATH = '/data/proxies.lst'
+# ROTATING_PROXY_CLOSE_SPIDER = True

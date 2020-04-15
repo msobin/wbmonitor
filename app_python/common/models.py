@@ -11,7 +11,8 @@ class Product(Base):
     __tablename__ = 'product'
 
     STATUS_NEW = 1
-    STATUS_REGULAR = 2
+    STATUS_SATELLITE = 2
+    STATUS_REGULAR = 3
 
     id = Column(Integer, primary_key=True)
     domain = Column(String)
@@ -27,8 +28,8 @@ class Product(Base):
     created_at = Column(DateTime, default=datetime.datetime.now)
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
 
-    current_price = relationship('ProductPrice', order_by='desc(ProductPrice.id)', uselist=False)
-    prices = relationship('ProductPrice', order_by='desc(ProductPrice.id)')
+    price = relationship('ProductPrice', uselist=False, back_populates='product')
+    price_history = relationship('ProductPriceHistory', back_populates='product')
     brand = relationship('Brand')
 
 
@@ -41,11 +42,24 @@ class ProductPrice(Base):
     id = Column(Integer, primary_key=True)
     product_id = Column(Integer, ForeignKey('product.id'))
     value = Column(Integer)
+    value_prev = Column(Integer)
     status = Column(Integer, default=STATUS_NEW)
     created_at = Column(DateTime, default=datetime.datetime.now)
     updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
 
-    product = relationship('Product')
+    product = relationship('Product', uselist=False, back_populates='price')
+
+
+class ProductPriceHistory(Base):
+    __tablename__ = 'product_price_history'
+
+    id = Column(Integer, primary_key=True)
+    product_id = Column(Integer, ForeignKey('product.id'))
+    value = Column(Integer)
+    created_at = Column(DateTime, default=datetime.datetime.now)
+    updated_at = Column(DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
+
+    product = relationship('Product', back_populates='price_history')
 
 
 class Category(Base):

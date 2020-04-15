@@ -32,7 +32,8 @@ use yii\db\Expression;
 class Product extends ActiveRecord
 {
     const STATUS_NEW = 1;
-    const STATUS_REGULAR = 2;
+    const STATUS_SATELLITE = 2;
+    const STATUS_REGULAR = 3;
 
     /**
      * {@inheritdoc}
