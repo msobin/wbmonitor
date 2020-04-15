@@ -118,3 +118,8 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.product-card {
+    float:left;
+    margin: 20px;
+}

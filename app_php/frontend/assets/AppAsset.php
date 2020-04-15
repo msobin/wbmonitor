@@ -23,4 +23,9 @@ class AppAsset extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
+
+    // todo удалить полсе отладки
+    public $publishOptions = [
+        'forceCopy' => true,
+    ];
 }

@@ -7,8 +7,11 @@ use frontend\models\Product;
  */
 ?>
 
-<div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="<?= $model->imageUrl ?>" style="max-width: 100px">
+<div class="card product-card" style="width: 24rem;">
+    <div class="card-img-top" style="text-align: center">
+        <img class="card-img-top" src="<?= $model->imageUrl ?>" style="max-width: 100px">
+    </div>
+
     <div class="card-body">
         <h5 class="card-title"><?= $model->name ?></h5>
         <p class="card-text"><?= $model->description ?></p>
