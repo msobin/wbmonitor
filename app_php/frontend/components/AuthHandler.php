@@ -63,6 +63,7 @@ class AuthHandler
                         'username' => $name,
                         'email' => $email,
                         'password' => $password,
+                        'status' => User::STATUS_ACTIVE,
                     ]);
                     $user->generateAuthKey();
                     $user->generatePasswordResetToken();

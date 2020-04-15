@@ -84,4 +84,16 @@ class Product extends \common\models\Product
             )
             : '';
     }
+
+    /**
+     * @return int
+     */
+    public function priceChangeDirection()
+    {
+        if (!$this->price || !$this->price->value || !$this->price->value_prev) {
+            return 0;
+        }
+
+        return $this->price->value <=> $this->price->value_prev;
+    }
 }

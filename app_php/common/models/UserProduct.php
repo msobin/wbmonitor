@@ -2,31 +2,29 @@
 
 namespace common\models;
 
-use yii\db\ActiveRecord;
-use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
 use DateTime;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
- * Class ProductPriceHistory
+ * Class UserProduct
  * @package common\models
  *
  * @property integer $id
+ * @property integer $user_id
  * @property integer $product_id
- * @property integer $value
  * @property DateTime $created_at
  * @property DateTime $updated_at
- *
- * @property Product $product
  */
-class ProductPriceHistory extends ActiveRecord
+class UserProduct extends ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'product_price_history';
+        return 'user_product';
     }
 
     /**
@@ -48,8 +46,13 @@ class ProductPriceHistory extends ActiveRecord
     public function rules()
     {
         return [
-            [['product_id'], 'required'],
-            ['value', 'integer'],
+            [['user_id', 'product_id'], 'required'],
+            [
+                'user_id',
+                'exist',
+                'targetClass' => User::class,
+                'targetAttribute' => ['user_id' => 'id']
+            ],
             [
                 'product_id',
                 'exist',
@@ -65,5 +68,13 @@ class ProductPriceHistory extends ActiveRecord
     public function getProduct()
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 }

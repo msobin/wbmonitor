@@ -4,8 +4,10 @@ namespace frontend\controllers;
 
 use common\services\exceptions\ProductServiceException;
 use frontend\models\Product;
+use Ghunti\HighchartsPHP\Highchart;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -23,6 +25,16 @@ class ProductController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             [
                 'class' => AjaxFilter::class,
                 'only' => ['add-product']

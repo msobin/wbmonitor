@@ -59,11 +59,13 @@ return [
                 'products' => 'product/index',
                 'product/add' => 'product/add',
                 'product/<id:\d+>' => 'product/view',
+                '<alias:\w+>' => 'site/<alias>',
             ],
         ],
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => require __DIR__ . '/oauth-clients.php',
+
         ],
     ],
     'params' => $params,

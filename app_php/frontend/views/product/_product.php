@@ -21,11 +21,23 @@ use frontend\models\Product;
             <li class="list-group-item"><?= $model->cardSizes ?></li>
         <?php endif; ?>
         <?php if ($model->price) : ?>
-            <li class="list-group-item"><?= implode(' -> ', [$model->cardPricePrev, $model->cardPrice]) ?></li>
+            <?php
+            switch ($model->priceChangeDirection()) {
+                case -1:
+                    $priceColor = 'LightGreen';
+                    break;
+                case 1:
+                    $priceColor = 'LightSalmon';
+                    break;
+                case 0:
+                    $priceColor = '';
+                    break;
+            } ?>
+            <li class="list-group-item" style="background-color: <?= $priceColor ?>"><?= implode(' -> ', [$model->cardPricePrev, $model->cardPrice]) ?></li>
         <?php endif; ?>
     </ul>
     <div class="card-body">
-        <a href="<?= $model->shopUrl ?>" target="_blank" class="btn btn-primary"><?= Yii::t('app', 'Промотр'); ?></a>
-        <a href="<?= $model->uri ?>" target="_blank" class="btn btn-primary"><?= Yii::t('app', 'В магазин'); ?></a>
+        <a href="<?= $model->uri ?>" target="_blank" class="btn btn-primary"><?= Yii::t('app', 'Промотр'); ?></a>
+        <a href="<?= $model->shopUrl ?>" target="_blank" class="btn btn-primary"><?= Yii::t('app', 'В магазин'); ?></a>
     </div>
 </div>

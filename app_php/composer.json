@@ -24,7 +24,8 @@
         "yiisoft/yii2-authclient": "^2.2",
         "yiisoft/yii2-redis": "^2.0",
         "mikemadisonweb/yii2-rabbitmq": "^2.2",
-        "kartik-v/yii2-grid": "@dev"
+        "kartik-v/yii2-grid": "@dev",
+        "2amigos/yii2-chartjs-widget": "^2.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
