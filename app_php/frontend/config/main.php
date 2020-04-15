@@ -56,7 +56,9 @@ return [
                     'controller' => ['v1/product'],
                     'prefix' => 'api',
                 ],
-                'product/add' => 'product/add-product',
+                'products' => 'product/index',
+                'product/add' => 'product/add',
+                'product/<id:\d+>' => 'product/view',
             ],
         ],
         'authClientCollection' => [

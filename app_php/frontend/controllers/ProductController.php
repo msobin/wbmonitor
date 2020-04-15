@@ -3,9 +3,12 @@
 namespace frontend\controllers;
 
 use common\services\exceptions\ProductServiceException;
+use frontend\models\Product;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -31,7 +34,7 @@ class ProductController extends Controller
      * @param string $url
      * @return array
      */
-    public function actionAddProduct(string $url)
+    public function actionAdd(string $url)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
@@ -48,5 +51,47 @@ class ProductController extends Controller
             'success' => true,
             'message' => Yii::t('app', 'Товар добавлен'),
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function actionIndex()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Product::find(),
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * @param int $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionView(int $id)
+    {
+        $product = $this->getProduct($id);
+
+        return $this->render('view', [
+            'product' => $product,
+        ]);
+    }
+
+    /**
+     * @param int $id
+     * @return Product
+     * @throws NotFoundHttpException
+     */
+    protected function getProduct(int $id)
+    {
+        if (!$product = Product::findOne($id)) {
+            throw new NotFoundHttpException(Yii::t('app', 'Товар не найден'));
+        };
+
+        return $product;
     }
 }
