@@ -24,10 +24,10 @@ use yii\db\Expression;
  * @property DateTime $created_at
  * @property DateTime $updated_at
  *
- * @property ProductPrice[] $prices
  * @property Brand $brand
  * @property Category $category
- * @property ProductPrice $currentPrice
+ * @property ProductPrice $price
+ * @property ProductPriceHistory[] $priceHistory
  */
 class Product extends ActiveRecord
 {
@@ -81,17 +81,17 @@ class Product extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPrices()
+    public function getPriceHistory()
     {
-        return $this->hasMany(ProductPrice::class, ['product_id' => 'id']);
+        return $this->hasMany(ProductPriceHistory::class, ['product_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCurrentPrice()
+    public function getPrice()
     {
-        return $this->hasOne(ProductPrice::class, ['product_id' => 'id'])->orderBy(['id' => SORT_DESC]);
+        return $this->hasOne(ProductPrice::class, ['product_id' => 'id']);
     }
 
     /**
