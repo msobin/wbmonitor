@@ -3,6 +3,7 @@ import datetime
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import JSONB
 
 Base = declarative_base()
 
@@ -19,6 +20,7 @@ class Product(Base):
     code = Column(Integer)
     name = Column(String)
     description = Column(String)
+    params = Column(JSONB, default='{}')
     status = Column(Integer, default=STATUS_NEW)
     images = Column(ARRAY(String), default=[])
     picker = Column(ARRAY(Integer), default=[])

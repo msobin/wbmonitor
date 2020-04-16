@@ -16,6 +16,7 @@ use yii\db\Expression;
  * @property string $code
  * @property string $name
  * @property string $description
+ * @property array $params
  * @property integer $status
  * @property array $images
  * @property array $picker
@@ -70,6 +71,8 @@ class Product extends ActiveRecord
             ['description', 'string'],
             [['code', 'status', 'ref_count'], 'integer'],
             ['category_ids', 'each', 'rule' => 'integer'],
+            ['params', 'safe'],
+            ['params', 'default', 'value' => []],
         ];
     }
 

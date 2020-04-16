@@ -31,6 +31,18 @@ def get_categories(breadcrumbs):
     return categories
 
 
+def get_params(divs):
+    params = {}
+
+    for div in divs:
+        selector = Selector(text=div)
+        key = selector.xpath('//span/b/text()').extract_first()
+        value = selector.xpath('//span/text()').extract_first()
+        params[key] = value
+
+    return params
+
+
 class ProductItem(scrapy.Item):
     url = scrapy.Field(output_processor=TakeFirst())
     code = scrapy.Field(output_processor=TakeFirst())
@@ -42,3 +54,4 @@ class ProductItem(scrapy.Item):
     description = scrapy.Field(output_processor=TakeFirst())
     categories = scrapy.Field(input_processor=get_categories)
     sizes = scrapy.Field()
+    params = scrapy.Field(input_processor=get_params)

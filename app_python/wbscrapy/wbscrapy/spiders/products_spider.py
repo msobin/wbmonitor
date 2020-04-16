@@ -50,5 +50,6 @@ class ProductsSpider(scrapy.Spider):
         loader.add_xpath('categories', '//ul[@class="bread-crumbs"]/li/a')
         loader.add_xpath('sizes',
                          '//div[contains(@class, "size-list") and not(contains(@class, "hide"))]/label[not(contains(@class, "disabled"))]/@data-size-name')
+        loader.add_xpath('params', '//div[@class="params"]//div[@class="pp"]')
 
         return loader.load_item()

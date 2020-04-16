@@ -8,6 +8,7 @@ class m200402_111957_create_product_table extends \console\migrations\models\Mig
     /**
      * {@inheritdoc}
      * @throws \yii\base\NotSupportedException
+     * @throws \yii\base\Exception
      */
     public function safeUp()
     {
@@ -17,6 +18,7 @@ class m200402_111957_create_product_table extends \console\migrations\models\Mig
             'code' => $this->integer()->notNull(),
             'name' => $this->string(255),
             'description' => $this->text(),
+            'params' => $this->json()->defaultValue('{}'),
             'status' => $this->tinyInteger()->notNull()->defaultValue(1),
             'ref_count' => $this->integer()->notNull()->defaultValue(0),
             'images' => $this->getDb()->getSchema()->createColumnSchemaBuilder('text[]')->defaultValue('{}'),

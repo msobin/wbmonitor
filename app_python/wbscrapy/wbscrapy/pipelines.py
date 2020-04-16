@@ -39,6 +39,7 @@ class PostgresPipeline(object):
         product.sizes = item.get('sizes')
         product.updated_at = datetime.datetime.now()
         product.category_ids = self.get_category_ids(spider, item.get('categories'))
+        product.params = item.get('params')
 
         item_price = item.get('price')
 
