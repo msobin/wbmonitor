@@ -16,6 +16,7 @@ use yii\helpers\Url;
  * @property string $cardSizes
  * @property string $cardPrice
  * @property string $cardPricePrev
+ * @property string $fullName
  */
 class Product extends \common\models\Product
 {
@@ -95,5 +96,15 @@ class Product extends \common\models\Product
         }
 
         return $this->price->value <=> $this->price->value_prev;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        $brandName = $this->brand ? $this->brand->title : '';
+
+        return $brandName ? $brandName . ' / ' . $this->name : $this->name;
     }
 }
