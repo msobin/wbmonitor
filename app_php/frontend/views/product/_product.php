@@ -9,9 +9,8 @@ use frontend\models\Product;
 
 <div class="card product-card" style="width: 24rem;">
     <div class="card-img-top" style="text-align: center">
-        <img class="card-img-top" src="<?= $model->imageUrl ?>" style="max-width: 100px">
+        <img class="card-img-top img-responsive" src="<?= $model->imageUrl ?>">
     </div>
-
     <div class="card-body">
         <h5 class="card-title"><?= $model->name ?></h5>
         <p class="card-text"><?= $model->description ?></p>
@@ -33,7 +32,8 @@ use frontend\models\Product;
                     $priceColor = '';
                     break;
             } ?>
-            <li class="list-group-item" style="background-color: <?= $priceColor ?>"><?= implode(' -> ', [$model->cardPricePrev, $model->cardPrice]) ?></li>
+            <li class="list-group-item"
+                style="background-color: <?= $priceColor ?>"><?= implode(' -> ', [$model->cardPricePrev, $model->cardPrice]) ?></li>
         <?php endif; ?>
     </ul>
     <div class="card-body">
