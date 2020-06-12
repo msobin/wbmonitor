@@ -6,7 +6,7 @@ POSTGRES_HOST = os.getenv('POSTGRES_HOST', 'localhost')
 POSTGRES_PORT = os.getenv('POSTGRES_PORT', 5432)
 POSTGRES_DB = os.getenv('POSTGRES_DB', 'wbmonitor')
 
-# PRODUCT_REGEXP = r'https:\/\/[www.]*wildberries.\w{2}\/catalog\/\d+\/detail.aspx'
+PRODUCT_REGEXP = r'https:\/\/[www.]*wildberries.\w{2}\/catalog\/\d+\/detail.aspx'
 #
 # MAX_PRODUCT_COUNT = int(os.getenv('MAX_PRODUCT_COUNT', 30))
 #
