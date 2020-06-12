@@ -5,4 +5,4 @@ jobs:
 
   - name: regular_scrapping
     command: cd /app/wbscrapy && scrapy crawl products
-    schedule: "0 */4 * * *"
+    schedule: "0 */12 * * *"
