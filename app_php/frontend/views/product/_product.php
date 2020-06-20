@@ -13,7 +13,7 @@ use frontend\models\Product;
     </div>
     <div class="card-body">
         <h5 class="card-title"><?= $model->name ?></h5>
-        <p class="card-text"><?= $model->description ?></p>
+<!--        <p class="card-text">--><?//= $model->description ?><!--</p>-->
     </div>
     <ul class="list-group list-group-flush">
         <?php if ($model->cardSizes) : ?>

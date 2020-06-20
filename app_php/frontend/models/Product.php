@@ -49,7 +49,7 @@ class Product extends \common\models\Product
      */
     public function getCardSizes()
     {
-        return implode(', ', $this->sizes);
+        return $this->sizes ? implode(', ', $this->sizes) : '';
     }
 
     /**
